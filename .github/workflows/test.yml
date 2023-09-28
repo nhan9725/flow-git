@@ -1,0 +1,36 @@
+name: Choose Option Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      option:
+        description: 'Choose an option'
+        required: true
+        default: 'option1'
+        enum: ['option1', 'option2', 'option3']
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run based on chosen option
+        run: |
+          OPTION=${{ github.event.inputs.option }}
+          echo "Selected option: $OPTION"
+
+          if [ "$OPTION" == "option1" ]; then
+            echo "Running tasks for Option 1"
+            # Add tasks specific to Option 1 here
+          elif [ "$OPTION" == "option2" ]; then
+            echo "Running tasks for Option 2"
+            # Add tasks specific to Option 2 here
+          elif [ "$OPTION" == "option3" ]; then
+            echo "Running tasks for Option 3"
+            # Add tasks specific to Option 3 here
+          else
+            echo "Invalid option selected"
+            exit 1
+          fi
